@@ -1,0 +1,5 @@
+node_modules
+.scratch
+.claude
+.agents
+skills-lock.json

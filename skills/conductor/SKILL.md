@@ -16,7 +16,7 @@ If you are tempted to open a file, that is a brief you haven't written yet.
 
 | Scenario | Agent / model | Brief |
 |---|---|---|
-| Locate code, gather facts, answer "how does X work" | Explore agent (inherit model) | [references/explorer.md](references/explorer.md) |
+| Locate code, gather facts, answer "how does X work" | Explore agent — **sonnet-5**, **opus-4.8**, or Codex **gpt-5.5**; never inherit | [references/explorer.md](references/explorer.md) |
 | Design a plan for a non-trivial task | Plan agent (inherit model) | [references/planner.md](references/planner.md) |
 | Clear-spec implementation, migrations, data analysis, mechanical refactors, test-writing | Codex **gpt-5.5** | [references/implementer.md](references/implementer.md) + [references/codex.md](references/codex.md) |
 | Anything user-facing: new UI, copy, interface/API design | **opus-4.8** — never gpt-5.5 | [references/implementer.md](references/implementer.md) |
@@ -24,12 +24,13 @@ If you are tempted to open a file, that is a brief you haven't written yet.
 | Review a plan | **fable-5** or **opus-4.8** | [references/reviewer.md](references/reviewer.md) |
 | Review a coding turn | **opus-4.8** or **gpt-5.5** — prefer a different model than the implementer | [references/reviewer.md](references/reviewer.md) |
 | Redo a task gpt-5.5 / opus-4.8 failed at | **fable-5** | [references/implementer.md](references/implementer.md) |
+| QA a feature, diagnose a bug, unstick a stuck agent | **gpt-5.5 xhigh** or **opus-4.8 xhigh** | [references/diagnostician.md](references/diagnostician.md) |
 
 Model rules:
 
 - The matrix rows are defaults, not ceilings. Promote any task to fable-5 once the default model has missed the bar and the work needs redoing — fable-5 is the escalation model, never the first pick.
 - Never use Haiku, for anything.
-- Claude agents launch via the Agent tool (`model: "opus"` or `"fable"`); Codex gpt-5.5 agents launch per [references/codex.md](references/codex.md).
+- Claude agents launch via the Agent tool (`model: "sonnet"`, `"opus"`, or `"fable"`); Codex gpt-5.5 agents launch per [references/codex.md](references/codex.md).
 
 ## Invoked without a task
 
@@ -48,6 +49,8 @@ One task = one implementation agent = one commit. For each task:
 7. **Commit and close** — once the verdict is clean (or all standing findings are fixed, with P1s confirmed), have the implementation agent commit that task's work before the next task starts. When working a series of issues, this per-task commit is mandatory, not optional. Done when the commit exists.
 
 Independent tasks may run concurrently — use worktree isolation if they could touch the same files — but each task keeps a single owner and its review → fix → commit tail runs serially.
+
+When *any* agent gets stuck — stalls, loops, or returns `blocked` or repeated `partial` — don't debug it yourself: launch a diagnostician to find out why ([references/diagnostician.md](references/diagnostician.md)).
 
 ## Issue tracking
 

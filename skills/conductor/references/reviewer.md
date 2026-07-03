@@ -18,7 +18,7 @@ For high-stakes changes, run one lane on gpt-5.5 so the pair spans two model fam
 
 Merge the two contracts, dedupe overlapping findings (keep the higher priority), and adjudicate once — a single fix turn carries the merged standing findings. Both verdicts are advisory: the conductor rules, and may dismiss any finding or overrule an `approve` and order fixes anyway. Never auto-forward findings to the implementer.
 
-Re-reviews (when the task loop calls for one) are a **single** agent, not the pair — briefed only to confirm the named standing findings were fixed, not a fresh full pass:
+Re-reviews (when the task loop or session review calls for one) are a **single** agent, not the pair — briefed only to confirm the named standing findings were fixed, not a fresh full pass:
 
 ```
 RE-REVIEW: confirm these findings are fixed — <the standing findings, ids and text verbatim>

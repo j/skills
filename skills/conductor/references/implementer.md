@@ -30,7 +30,7 @@ If ISSUE is set: the reviewers added these findings as checkboxes under `## Revi
 Return ONLY the contract block.
 ```
 
-If the agent is gone, brief a fresh one with the original TASK/CONSTRAINTS plus the standing findings. If a fix turn still misses the bar, relaunch the task on fable-5 with the full history of what failed.
+If the agent is gone, brief a fresh one with the original TASK/CONSTRAINTS plus the standing findings. If a fix turn leaves a P1 unfixed (lesser findings are ruled and committed per the task loop), relaunch the task on fable-5 with the full history of what failed — once. The redo re-enters the review gate with a fresh cap; if it too misses, that is a genuine blocker — stop the task and notify the user rather than relaunching again.
 
 ## Commit turn
 

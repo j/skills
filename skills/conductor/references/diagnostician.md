@@ -8,7 +8,7 @@ Models: **gpt-5.5** at `--effort xhigh` (read-only run per [codex.md](codex.md))
 
 - **QA** — prove a feature actually behaves as claimed, beyond what the reviewer pair can judge from a diff.
 - **Bug diagnosis** — a defect with an unknown cause. The diagnostician returns the root cause; the fix goes to an implementer per the matrix.
-- **Stuck agent** — *any* agent that stalls, loops, or returns `blocked` or repeated `partial` gets a diagnostician: hand it the stuck agent's brief and its contract returns, and ask why. The diagnosis feeds your next move — re-brief, relaunch, or escalate to fable-5.
+- **Stuck agent** — *any* agent that stalls, loops, or returns `blocked` or repeated `partial` gets a diagnostician: hand it the stuck agent's brief and its contract returns, and ask why. The diagnosis feeds your next move — re-brief, relaunch, or escalate to fable-5 — and buys exactly one retry; a second stall falls to the task loop's blocker rule, never another diagnostician.
 
 ## Brief template
 

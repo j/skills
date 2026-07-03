@@ -29,3 +29,4 @@ Many of the skills referenced are available in **[mattpocock/skills](https://git
 
 - [tdd](https://github.com/mattpocock/skills/tree/main/skills/engineering/tdd) — implementer agents are briefed to use `/tdd` (when installed) at the seams agreed in the plan.
 - [code-review](https://github.com/mattpocock/skills/tree/main/skills/engineering/code-review) — the correctness reviewer lane loads the `code-review` skill before judging a diff.
+- [diagnosing-bugs](https://github.com/mattpocock/skills/tree/main/skills/engineering/diagnosing-bugs) — diagnostician agents load `diagnosing-bugs` (when installed) before rooting out a bug's cause.

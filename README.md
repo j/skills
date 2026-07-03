@@ -18,6 +18,12 @@ Key ideas:
 
 Reference files: [explorer](skills/conductor/references/explorer.md) · [planner](skills/conductor/references/planner.md) · [tech-spec](skills/conductor/references/tech-spec.md) · [implementer](skills/conductor/references/implementer.md) · [reviewer](skills/conductor/references/reviewer.md) · [diagnostician](skills/conductor/references/diagnostician.md) · [codex](skills/conductor/references/codex.md)
 
+### [enhance-spec](skills/enhance-spec/SKILL.md)
+
+Enhances an existing spec file by appending a **typed call-stack architecture handoff**: TypeScript-pseudocode contracts, seams and adapters, entrypoint-to-side-effect call stacks, a file map, and a red-green-refactor test plan. Design-only — output goes inline or to a target file, never into implementation.
+
+Invoked directly as `/enhance-spec <spec-path> [output-target]`, and it powers the conductor's tech-spec contest: a scribe agent writes the base spec from the conductor's brief, both contest designers apply this skill's method to it, and the judge writes the winning `chosen.md` in its outline before appending the design to the task's issue. Install it alongside the conductor skill.
+
 ## External tools & skills to install
 
 The conductor skill delegates to tools and skills that are not part of this repository:

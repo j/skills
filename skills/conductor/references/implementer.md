@@ -9,7 +9,7 @@ Keep the launch handle (agent id / Codex session id): fix turns go back to this 
 ```
 TASK: <what to build/change, and the one-sentence why>
 ISSUE: <issue reference — file path, GitHub #, Linear ID — omit line if none>
-CONTEXT: <recon facts, file:line pointers, the reviewed plan if one exists>
+CONTEXT: <recon facts, file:line pointers, the reviewed plan or the contest's chosen.md path if one exists>
 CONSTRAINTS: <hard requirements; follow the repo's AGENTS.md / CLAUDE.md conventions>
 DONE MEANS: <checkable criteria — behaviour observed, tests passing, nothing left TODO>
 VERIFY: <how to prove it works before reporting — run it, don't assume>

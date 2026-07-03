@@ -10,12 +10,13 @@ Runs a Claude Code session as a **conductor**: the main session never reads, sea
 
 Key ideas:
 
-- **Decision matrix** — maps each kind of work to an agent and model: Explore agents for recon, Plan agents for design, Codex (gpt-5.5) for clear-spec implementation, Opus for user-facing work, and Fable as the escalation model when a default model misses the bar.
-- **Task loop** — one task = one implementation agent = one commit: decompose → recon → brief and implement → review gate → adjudicate → (optional) re-review → commit.
+- **Decision matrix** — maps each kind of work to an agent and model: Explore agents for recon, Plan agents for design, Codex (gpt-5.5) for clear-spec implementation, Opus for user-facing work, diagnosticians for QA and debugging, and Fable as the escalation model when a default model misses the bar.
+- **Task loop** — one task = one implementation agent = one commit: decompose → recon → shape gate (a design contest for vague tasks) → brief and implement → review gate → adjudicate → (capped) re-review → commit. Multi-task runs close with a single session review over the whole commit range.
 - **Reviewer pair** — every coding turn is judged by two concurrent reviewers (a correctness lane and a standards lane), ideally spanning two model families; the conductor rules on which findings stand.
+- **Bounded loops, work to completion** — every review cycle is hard-capped at two rounds; at the cap the conductor rules and the task commits. Agents never spin: tasks run to completion, and work only stops for a genuine blocker needing human input — after a fable-5 escalation has failed to clear it — with immediate notification.
 - **Peer briefs** — every sub-agent gets an explicit brief (goal, constraints, in-scope files, done-criteria) and must return a compact output contract, nothing more.
 
-Reference files: [explorer](skills/conductor/references/explorer.md) · [planner](skills/conductor/references/planner.md) · [implementer](skills/conductor/references/implementer.md) · [reviewer](skills/conductor/references/reviewer.md) · [codex](skills/conductor/references/codex.md)
+Reference files: [explorer](skills/conductor/references/explorer.md) · [planner](skills/conductor/references/planner.md) · [tech-spec](skills/conductor/references/tech-spec.md) · [implementer](skills/conductor/references/implementer.md) · [reviewer](skills/conductor/references/reviewer.md) · [diagnostician](skills/conductor/references/diagnostician.md) · [codex](skills/conductor/references/codex.md)
 
 ## External tools & skills to install
 

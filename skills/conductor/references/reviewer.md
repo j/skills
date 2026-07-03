@@ -55,6 +55,20 @@ FOCUS: coding standards only — do not re-litigate correctness.
 STANDARDS: <paste the known standards, or:> not supplied — read the repository's AGENTS.md / CLAUDE.md and the root CODING_STANDARDS.md first (skip any that don't exist) and review against them; flag any violation as a finding. If none of these files exist, judge against the dominant conventions of the surrounding code.
 ```
 
+## Session review
+
+The closing pass of a multi-task session (matrix row "Session review after a multi-task run") is a **single** agent, not the pair — per-task gates already covered correctness and standards; this pass judges completeness and regressions across the whole run. Brief:
+
+```
+SESSION REVIEW: <full commit range of the session, first task's parent to last commit>
+ISSUES: <every issue/PRD worked this session — one reference per line>
+Judge exactly two things: (1) each listed issue/PRD is complete end to end — every acceptance criterion met, every review sub-task checked off as fixed or skipped with a ruling; (2) no commit in the range regressed work from an earlier commit in it. Read each issue/PRD in full before judging it.
+Do not re-litigate per-task review findings already ruled on; flag only incompleteness or cross-task breakage. Read-only; fix nothing yourself.
+Return ONLY the contract block.
+```
+
+Same output contract; ids `C1, C2…`. Each finding names the issue/PRD it belongs to. An `approve` here means the session is closed.
+
 ## Plan review
 
 Reviewing a plan (matrix row "Review a plan") is a **single** agent on the shared body with two substitutions: `REVIEW:` carries the plan verbatim (there is no diff, so drop the code-review-skill line), and findings cite plan step numbers instead of file:line (ids `C1, C2…`). Same output contract. Standing findings don't get a fix turn — the conductor amends the plan itself before briefing the implementer.

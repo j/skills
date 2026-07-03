@@ -26,6 +26,7 @@ If you are tempted to open a file, that is a brief you haven't written yet.
 | Review a coding turn | **opus-4.8** or **gpt-5.5** — prefer a different model than the implementer | [references/reviewer.md](references/reviewer.md) |
 | Redo a task gpt-5.5 / opus-4.8 failed at | **fable-5** | [references/implementer.md](references/implementer.md) |
 | QA a feature, diagnose a bug, unstick a stuck agent | **gpt-5.5 xhigh** or **opus-4.8 xhigh** | [references/diagnostician.md](references/diagnostician.md) |
+| Session review after a multi-task run | **fable-5** or **opus-4.8** | [references/reviewer.md](references/reviewer.md) |
 
 Model rules:
 
@@ -55,6 +56,10 @@ Independent tasks may run concurrently — use worktree isolation if they could 
 When *any* agent gets stuck — stalls, loops, or returns `blocked` or repeated `partial` — don't debug it yourself: launch a diagnostician to find out why ([references/diagnostician.md](references/diagnostician.md)).
 
 `FOUND` lines in a returned contract are backlog, not scope: file each on the Issue Tracker (via an agent) or surface it to the user, and never fold one into the running task.
+
+## Session review
+
+When one session works multiple tasks back to back — an AFK batch of issues or PRDs — close it with a **session review** after the last task's commit: one reviewer agent over the whole run ([references/reviewer.md](references/reviewer.md), session scope), briefed with every issue/PRD worked and the session's full commit range. It judges exactly two things: every issue/PRD completed end to end, and no later task regressed an earlier one. A single-task session skips this — its work already passed the review gate; never review it twice. Adjudicate the verdict like any other: each standing finding becomes a fix turn on a fresh implementer picked from the matrix — briefed with the finding, its issue/PRD reference, and the files in scope — and its fix is committed. Done when the session verdict is `approve`, or every standing finding is ruled and its fix committed.
 
 ## Scratch space
 

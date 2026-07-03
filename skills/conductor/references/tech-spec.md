@@ -40,7 +40,7 @@ OPEN QUESTIONS: <what the design had to leave unresolved — omit if none>
 JUDGE: pick or merge the strongest design from the entries below.
 TASK: <the original task and constraints>
 ISSUE: <issue reference — omit line if none>
-ENTRIES: <the four paths with their pitches>
+ENTRIES: <the four paths with their pitches and the designers' OPEN QUESTIONS>
 Criteria, in order: adherence to the repo's root CODING_STANDARDS.md (if present) and dominant conventions; elegant naming; the cleanest path by readability and code cleanliness; the design most certain to get the job done. You may merge ideas across entries.
 Write the winning prototype to <task scratch folder>/chosen.md — one concrete design an implementer can follow without reading the losing entries.
 If ISSUE is set: post the prototype on the issue (or its summary plus the chosen.md path) as the implementation guide, via the Issue Tracker described in the repo's AGENTS.md / CLAUDE.md.
@@ -58,4 +58,4 @@ OPEN QUESTIONS: <what the implementer must resolve — omit if none>
 
 ## After the contest
 
-The chosen prototype is advisory like any contract — the conductor rules, and may order a revision or reverse the merge. The implementer's brief carries the `chosen.md` path in CONTEXT as the backbone of the work. A task that went through the contest normally needs no separate Plan agent: the prototype already names the files, seams, and first test slices.
+The chosen prototype is advisory like any contract — the conductor rules, and may order a revision or reverse the merge. The implementer's brief carries the `chosen.md` path in CONTEXT as the backbone of the work, along with the judge's OPEN QUESTIONS and the conductor's ruling on each — an open question the implementer never sees is a decision made by accident. A task that went through the contest normally needs no separate Plan agent: the prototype already names the files, seams, and first test slices.

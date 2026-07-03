@@ -17,6 +17,7 @@ Return ONLY the contract block below.
 
 ```
 PLAN: <numbered steps, each naming the files it touches>
+VERIFY: <how to prove the change works — commands to run, behaviour to observe; feeds the implementer's VERIFY line>
 RISKS: <what could go wrong, ≤3 bullets>
 UNKNOWNS: <facts the plan had to assume — omit if none>
 ```

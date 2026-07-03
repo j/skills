@@ -48,11 +48,13 @@ One task = one implementation agent = one commit. For each task:
 5. **Review gate** — after the initial coding turn, launch the reviewer pair concurrently: one correctness lane, one standards lane ([references/reviewer.md](references/reviewer.md)). Done when you hold both verdicts, merged and deduped.
 6. **Adjudicate** — you decide which findings stand; the reviewer advises, the conductor rules. Standing findings go back to the *same* implementation agent with your ruling attached (fix-turn mechanics in [references/implementer.md](references/implementer.md)). Done when every finding is ruled — fix or dismissed — and the fix turn is dispatched.
 7. **Re-review — only when it earns it.** Hard cap: **two** implementer → reviewer loops per task (the initial review plus at most one re-review). After a fix turn, do *not* re-review by default — minimal or mechanical fixes are accepted on the implementer's contract. Re-review only when the standing findings were high-stakes (P1, or P2s touching correctness or security); re-review scope is in [references/reviewer.md](references/reviewer.md). Done when P1 fixes are confirmed or the cap is reached — if problems still stand at the cap, escalate to fable-5 or surface to the user; never loop a third time.
-8. **Commit and close** — once the verdict is clean (or all standing findings are fixed, with P1s confirmed), have the implementation agent commit that task's work before the next task starts. When working a series of issues, this per-task commit is mandatory, not optional. Done when the commit exists.
+8. **Commit and close** — once the verdict is clean (or all standing findings are fixed, with P1s confirmed), have the implementation agent commit that task's work before the next task starts. When working a series of issues, this per-task commit is mandatory, not optional. Done when the contract returns the commit hash.
 
 Independent tasks may run concurrently — use worktree isolation if they could touch the same files — but each task keeps a single owner and its review → fix → commit tail runs serially.
 
 When *any* agent gets stuck — stalls, loops, or returns `blocked` or repeated `partial` — don't debug it yourself: launch a diagnostician to find out why ([references/diagnostician.md](references/diagnostician.md)).
+
+`FOUND` lines in a returned contract are backlog, not scope: file each on the Issue Tracker (via an agent) or surface it to the user, and never fold one into the running task.
 
 ## Scratch space
 

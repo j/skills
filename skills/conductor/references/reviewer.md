@@ -18,14 +18,21 @@ For high-stakes changes, run one lane on gpt-5.5 so the pair spans two model fam
 
 Merge the two contracts, dedupe overlapping findings (keep the higher priority), and adjudicate once — a single fix turn carries the merged standing findings. Both verdicts are advisory: the conductor rules, and may dismiss any finding or overrule an `approve` and order fixes anyway. Never auto-forward findings to the implementer.
 
-Re-reviews (when the task loop calls for one) are a **single** agent, not the pair — briefed only to confirm the named standing findings were fixed, not a fresh full pass.
+Re-reviews (when the task loop calls for one) are a **single** agent, not the pair — briefed only to confirm the named standing findings were fixed, not a fresh full pass:
+
+```
+RE-REVIEW: confirm these findings are fixed — <the standing findings, ids and text verbatim>
+REVIEW: <same scope as the initial review>
+Judge only whether each named finding is resolved; flag anything a fix newly broke as a finding, but run no fresh full pass.
+Return ONLY the contract block.
+```
 
 ## Brief templates
 
 Shared body for both lanes:
 
 ```
-REVIEW: <branch / commit range / files changed — never "the recent changes">
+REVIEW: <branch / commit range / files changed — paste the implementer's CHANGED list; never "the recent changes">
 ISSUE: <issue reference — omit line if none>
 INTENT: <the implementer's TASK and DONE MEANS, verbatim>
 Judge only what is there — do not propose redesigns or fix anything yourself. Read-only: change no files, with one exception — if ISSUE is set, record your findings on it in the exact sub-task format from the reviewer reference, via the Issue Tracker described in the repo's AGENTS.md / CLAUDE.md. Nothing else goes on the issue.
@@ -48,15 +55,21 @@ FOCUS: coding standards only — do not re-litigate correctness.
 STANDARDS: <paste the known standards, or:> not supplied — read the repository's AGENTS.md / CLAUDE.md and the root CODING_STANDARDS.md first (skip any that don't exist) and review against them; flag any violation as a finding. If none of these files exist, judge against the dominant conventions of the surrounding code.
 ```
 
+## Plan review
+
+Reviewing a plan (matrix row "Review a plan") is a **single** agent on the shared body with two substitutions: `REVIEW:` carries the plan verbatim (there is no diff, so drop the code-review-skill line), and findings cite plan step numbers instead of file:line (ids `C1, C2…`). Same output contract. Standing findings don't get a fix turn — the conductor amends the plan itself before briefing the implementer.
+
 ## Output contract
 
 ```
 VERDICT: approve | fix
-FINDINGS: <one per line: [P1|P2|P3] file:line — defect + concrete failure scenario, ≤1 line>
+FINDINGS: <one per line: <id> [P1|P2|P3] file:line — defect + concrete failure scenario, ≤1 line>
 NOTES: <≤2 bullets of non-blocking observations — omit if none>
 ```
 
 P1 = breaks correctness or the brief's DONE MEANS; P2 = violates repo guidelines; P3 = polish. An `approve` verdict must have no P1/P2 findings.
+
+Ids are lane-prefixed and stable — `C1, C2…` for correctness, `S1, S2…` for standards — so the conductor's rulings, the implementer's fix turn, and the issue checkboxes all reference the same handle. When deduping merged verdicts, the surviving finding keeps its id.
 
 ## Issue sub-task format
 
@@ -64,8 +77,8 @@ When the brief carries an `ISSUE:` line, each reviewer appends exactly one secti
 
 ```
 ## Review <n> — <lane> — <approve|fix>
-- [ ] **P1** `path/to/file.ts:42` — <defect, ≤1 line>
-- [ ] **P2** `path/to/file.ts:88` — <defect, ≤1 line>
+- [ ] **C1 P1** `path/to/file.ts:42` — <defect, ≤1 line>
+- [ ] **C2 P2** `path/to/file.ts:88` — <defect, ≤1 line>
 ```
 
 `<lane>` is `correctness` or `standards`; both lanes of the same round share the same `<n>` (given in the brief by the conductor, starting at 1). An `approve` with no findings adds only the heading line. If the other lane already flagged the same defect on the issue, skip the duplicate. The implementer's fix turn closes each item by checking the box and appending `→ fixed` or `→ skipped: <ruling>` — the reviewer never checks boxes itself.

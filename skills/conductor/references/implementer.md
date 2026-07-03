@@ -37,7 +37,7 @@ If the agent is gone, brief a fresh one with the original TASK/CONSTRAINTS plus 
 Only after the conductor approves the (re-)reviewed work:
 
 ```
-APPROVED. Commit this task's work: <one-line commit message>. If ISSUE is set, mark it done. Return ONLY the contract block.
+APPROVED. Commit this task's work: <one-line commit message>. If ISSUE is set, mark it done. Return ONLY the contract block, with COMMIT: <hash> filled in.
 ```
 
 ## Output contract
@@ -45,7 +45,10 @@ APPROVED. Commit this task's work: <one-line commit message>. If ISSUE is set, m
 ```
 STATUS: done | partial | blocked
 DID: <≤5 bullets, file:line each>
+CHANGED: <every file touched, paths only, one per line — exhaustive where DID summarizes; this is the reviewer's scope>
 DECISIONS: <choices surfaced for the conductor's ruling — it may reverse any of them; omit if none>
 VERIFIED: <what you ran and what it showed>
+FOUND: <out-of-scope problems noticed, ≤1 line each — a future task, not yours to fix; omit if none>
 NEEDS: <blockers or questions — omit if none>
+COMMIT: <hash — commit turn only, omit otherwise>
 ```

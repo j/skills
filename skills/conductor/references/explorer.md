@@ -16,7 +16,7 @@ Return ONLY the contract block below.
 ## Output contract
 
 ```
-ANSWER: <direct answer, ≤3 sentences>
-POINTERS: <file:line per fact, one per line>
+ANSWER: <direct answer, ≤3 sentences — for enumeration questions, one line per item instead>
+POINTERS: <file:line — what it shows, one per line>
 GAPS: <what could not be determined — omit if none>
 ```

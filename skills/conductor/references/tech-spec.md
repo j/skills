@@ -2,7 +2,7 @@
 
 When the task loop's shape gate finds no pinned shape, run a **contest**: a scribe agent writes the base spec from the conductor's brief, two designers enhance it into competing prototypes in scratch, and a judge picks or merges the winner into one spec and appends it to the issue. No implementation code is written anywhere in the contest — every entry is a typed prototype (TypeScript pseudocode for contracts and call stacks, prose only for why).
 
-Every design turn follows the **`/enhance-spec` / `$enhance-spec` skill**, named on the `METHOD:` line of every contest brief — each agent locates, loads, and applies the skill itself; the conductor only names it. If the skill isn't installed, drop the `METHOD:` line and brief the essentials inline instead: domain types and state model; public interfaces/APIs with input/output and failure types; seams, boundaries, and adapters; entrypoint-to-side-effect call stacks; files to add/change/delete; test seams and first red slices; tradeoffs.
+Every design turn follows the **`/enhance-spec` / `$enhance-spec` skill**, named on the `METHOD:` line of every contest brief — each agent locates, loads, and applies the skill itself; the conductor only names it. Whether the skill is installed — and where it lives, if the METHOD line should point there — is a recon fact: an Explore agent answers it, never the conductor's own file read. If it isn't installed, drop the `METHOD:` line and brief the essentials inline instead: domain types and state model; public interfaces/APIs with input/output and failure types; seams, boundaries, and adapters; entrypoint-to-side-effect call stacks; files to add/change/delete; test seams and first red slices; tradeoffs.
 
 ## Base spec
 
@@ -30,10 +30,10 @@ Unknowns stay listed as open questions — the spec never guesses to look comple
 
 ## Designers
 
-Launch both concurrently (one message):
+Launch both concurrently (one message) and synchronously — the contest blocks on both contracts (launch rule in the skill's Model rules):
 
-- **opus-4.8 high** — Agent tool, `subagent_type: "claude"`, `model: "opus"`.
-- **Codex gpt-5.5 medium** — `codex:codex-rescue` per [codex.md](codex.md), `--effort medium`, read-only except its scratch folder.
+- **opus-4.8** — Agent tool, `subagent_type: "claude"`, `model: "opus"`.
+- **Codex** — a workspace-write Codex run per [codex.md](codex.md), with no commit grant (designers never commit). Phrase its METHOD line as locate-and-read, per codex.md's skills rule.
 
 Each designer produces **two materially different alternatives** — differing in interface shape, seam placement, ownership, call stack, or module boundaries, not merely names — one file per alternative in the task's scratch folder. Designers return only paths and pitches; the concepts themselves never enter conductor context.
 
@@ -59,7 +59,7 @@ OPEN QUESTIONS: <what the design had to leave unresolved — omit if none>
 
 ## Judge
 
-**fable-5 high** — Agent tool, `subagent_type: "claude"`, `model: "fable"`. The judge gets the spec path and the four entry paths and reads them; the conductor never does.
+**fable-5** — Agent tool, `subagent_type: "claude"`, `model: "fable"`. The judge gets the spec path and the four entry paths and reads them; the conductor never does.
 
 ```
 JUDGE: pick or merge the strongest design from the entries below.

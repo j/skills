@@ -156,7 +156,7 @@ Completion criterion: every contract and call-stack step maps to a file/module o
 
 ### 7. Write the RGR TDD test plan
 
-Use the `tdd` skill if available and project's testing standards. Plan vertical Red-Green-Refactor slices: one failing behavior test, minimal implementation, repeat. Do not write a horizontal "all tests first, all code later" plan.
+Follow the `/tdd` / `$tdd` skill (when installed) and the project's testing standards. Plan vertical Red-Green-Refactor slices: one failing behavior test, minimal implementation, repeat. Do not write a horizontal "all tests first, all code later" plan.
 
 Favor behavior through public interfaces and real seams over implementation-coupled mocks.
 
@@ -188,8 +188,8 @@ Completion criterion: the enhancement follows the outline below at the output ta
    - State that the spec does not carry enough context for an implementation-ready enhancement, and what is missing.
    - Completion criterion: the agent has not invented requirements, APIs, files, or call stacks.
 2. Start a grilling interview.
-   - Use `grill-with-docs` skill when the user wants docs, ADRs, glossary/domain language, or durable design artifacts created during discovery.
-   - Otherwise use `grill-me` skill.
+   - Use the `/grill-with-docs` / `$grill-with-docs` skill (when installed) when the user wants docs, ADRs, glossary/domain language, or durable design artifacts created during discovery.
+   - Otherwise use the `/grill-me` / `$grill-me` skill (when installed). With neither installed, run the interview directly by the rules below.
    - Ask one question at a time and provide the recommended answer with each question.
    - If a question can be answered by exploring the codebase, inspect the codebase instead of asking.
    - Completion criterion: the interview has enough context for Path A: problem, users/callers, constraints, affected systems, desired behavior, boundaries, likely APIs, invariants, risks, and acceptance tests.

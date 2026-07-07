@@ -1,8 +1,10 @@
 # Reviewer briefs
 
+The task loop's review gate sets the tier: **skip** (no reviewer — the conductor accepts on the implementer's contract), **solo** (one reviewer), or **pair** (two).
+
 ## The reviewer pair
 
-The initial review is **two sub-agents launched concurrently** (one message, two Agent calls), each with its own lane:
+A pair review is **two sub-agents launched concurrently** (one message, two Agent calls), each with its own lane:
 
 - **Correctness reviewer** — judges the diff against the implementer's INTENT and DONE MEANS: bugs, broken behaviour, missing verification, unmet criteria.
 - **Standards reviewer** — judges only guideline compliance: naming, structure, idiom, conventions. Its standards come from the repo's AGENTS.md / CLAUDE.md and a `CODING_STANDARDS.md` at the repository root — if the brief doesn't already supply the standards, its first action is to read those files (skip any that don't exist) before judging anything.
@@ -12,9 +14,9 @@ Either reviewer may load AGENTS.md / CLAUDE.md / CODING_STANDARDS.md at any poin
 Pick models from the decision matrix; the two lanes may use different models. Launch options per lane:
 
 - **Claude lane (opus-4.8 / fable-5):** launch via the Agent tool (`model: "opus"` or `"fable"`).
-- **gpt-5.5 lane:** launch a read-only `codex:codex-rescue` run carrying the same brief — see [codex.md](codex.md) for the launch and prompt-wrapping rules.
+- **Codex lane:** launch a read-only Codex run carrying the same brief per [codex.md](codex.md) — its conductor review-lane notes have the lane's specifics (brief wrapping, the issue-write exception, test-run caveats).
 
-For high-stakes changes, run one lane on gpt-5.5 so the pair spans two model families, and compare verdicts.
+When the gate calls for a cross-family pair (high stakes), run one lane on Codex and compare verdicts.
 
 Merge the two contracts, dedupe overlapping findings (keep the higher priority), and adjudicate once — a single fix turn carries the merged standing findings. Both verdicts are advisory: the conductor rules, and may dismiss any finding or overrule an `approve` and order fixes anyway. Never auto-forward findings to the implementer.
 
@@ -29,7 +31,7 @@ Return ONLY the contract block.
 
 ## Brief templates
 
-Shared body for both lanes:
+Shared body for every lane, pair or solo:
 
 ```
 REVIEW: <branch / commit range / files changed — paste the implementer's CHANGED list; never "the recent changes">
@@ -41,11 +43,17 @@ Return ONLY the contract block below.
 
 Prepend the lane header:
 
-**Correctness lane** —
+**Correctness lane** — a Claude lane opens with the skill-load line; drop it for a Codex lane (skills rule in [codex.md](codex.md)):
 
 ```
-Load the code-review skill (`Skill(code-review)`) and run it against the diff below before judging anything; map its findings into the contract. (Claude lane only)
+Load the `/code-review` / `$code-review` skill and run it against the diff below before judging anything; map its findings into the contract.
 FOCUS: correctness — bugs, broken behaviour, unmet DONE MEANS. Leave pure style/convention issues to the standards reviewer, but consult AGENTS.md / CLAUDE.md / CODING_STANDARDS.md whenever a finding hinges on a repo convention.
+```
+
+**Solo lane** (the gate's solo tier) — same skill-load rule, ids stay `C…`:
+
+```
+FOCUS: correctness — bugs, broken behaviour, unmet DONE MEANS — plus glaring standards violations; you are the only reviewer on this task.
 ```
 
 **Standards lane** —
@@ -95,4 +103,4 @@ When the brief carries an `ISSUE:` line, each reviewer appends exactly one secti
 - [ ] **C2 P2** `path/to/file.ts:88` — <defect, ≤1 line>
 ```
 
-`<lane>` is `correctness` or `standards`; both lanes of the same round share the same `<n>` (given in the brief by the conductor, starting at 1). An `approve` with no findings adds only the heading line. If the other lane already flagged the same defect on the issue, skip the duplicate. The implementer's fix turn closes each item by checking the box and appending `→ fixed` or `→ skipped: <ruling>` — the reviewer never checks boxes itself.
+`<lane>` is `correctness`, `standards`, or `solo`; both lanes of a pair round share the same `<n>` (given in the brief by the conductor, starting at 1). An `approve` with no findings adds only the heading line. If the other lane already flagged the same defect on the issue, skip the duplicate. The implementer's fix turn closes each item by checking the box and appending `→ fixed` or `→ skipped: <ruling>` — the reviewer never checks boxes itself. When the conductor dismisses every standing finding and no fix turn runs, a scribe agent closes the boxes with `→ skipped: <the ruling>` instead — boxes never stay dangling.

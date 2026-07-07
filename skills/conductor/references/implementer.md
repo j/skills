@@ -1,6 +1,6 @@
 # Implementer briefs
 
-Pick the model from the decision matrix; launch Claude implementers via the Agent tool (`subagent_type: "claude"`, `model: "opus"` or `"fable"`), Codex gpt-5.5 implementers per [codex.md](codex.md).
+Pick the model from the decision matrix; launch Claude implementers via the Agent tool (`subagent_type: "claude"`, `model: "opus"` or `"fable"`), Codex implementers per [codex.md](codex.md).
 
 Keep the launch handle (agent id / Codex session id): fix turns go back to this same agent so it keeps its context.
 
@@ -13,15 +13,17 @@ CONTEXT: <recon facts, file:line pointers, the reviewed plan or the contest's ch
 CONSTRAINTS: <hard requirements; follow the repo's AGENTS.md / CLAUDE.md conventions>
 DONE MEANS: <checkable criteria — behaviour observed, tests passing, nothing left TODO>
 VERIFY: <how to prove it works before reporting — run it, don't assume>
-Use the /tdd skill if installed and where possible, at the pre-agreed seams: <the seams/interfaces agreed in the plan>.
+Use the `/tdd` / `$tdd` skill if installed and where possible, at the pre-agreed seams: <the seams/interfaces agreed in the plan>.
 While working: run typechecking regularly and the relevant single test files regularly; run the full test suite once at the end, before reporting.
 If ISSUE is set: keep it current via the Issue Tracker described in the repo's AGENTS.md / CLAUDE.md — mark it in-progress when you start and ready-for-review when you return the contract. Status updates only; don't narrate progress on the issue.
 Do NOT commit yet. Return ONLY the contract block below.
 ```
 
+For a Codex implementer, drop the `/tdd` skill-load line (skills rule in [codex.md](codex.md)) and state the pre-agreed seams and test expectations directly in the brief instead.
+
 ## Fix turns
 
-After adjudicating a review, send the ruling to the same agent — SendMessage for Claude agents, a `--resume` delta for Codex (see [codex.md](codex.md)):
+After adjudicating a review, send the ruling to the same agent — SendMessage for Claude agents, a session-resume delta for Codex (fix-turn mechanics in [codex.md](codex.md)):
 
 ```
 REVIEW RULING: fix findings <ids>; findings <ids> are dismissed — do not touch.
@@ -39,6 +41,8 @@ Only after the conductor approves the (re-)reviewed work:
 ```
 APPROVED. Commit this task's work: <one-line commit message>. If ISSUE is set, mark it done. Return ONLY the contract block, with COMMIT: <hash> filled in.
 ```
+
+A Codex implementer takes the commit turn like any other agent — send it as a session-resume delta; its lane is built so commits land ([codex.md](codex.md)).
 
 ## Output contract
 
